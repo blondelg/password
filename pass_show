@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Welcome message
+clear
+echo
+echo "              __   ___ .  __      __        __   __"
+echo "  /\\  |    | /  \` |__  ' /__\`    |__)  /\\  /__\` /__\` "
+echo " /~~\\ |___ | \\__, |___   .__/    |    /~~\\ .__/ .__/ "
+echo
+
+# Create working directory and file
+alice_home=~/.alices_password
+if [ ! -d $alice_home ]
+then
+	mkdir $alice_home
+fi
+
+if [ ! -e $alice_home/passwords.gpg ]
+then
+	touch $alice_home/passwords.gpg
+fi
+
+# Read
+declare OUTPUT="$(gpg -o $alice_home/passwords -d $alice_home/passwords.gpg 2>&1)"
+if [[ $OUTPUT != *"decryption failed"* ]]
+then
+	cat $alice_home/passwords
+	echo
+	rm $alice_home/passwords
+else
+	echo "Wrong password"
+fi
+
+read -p "Press ENTER to exit" toto
+exit
