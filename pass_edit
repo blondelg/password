@@ -15,6 +15,7 @@ then
 	mkdir $alice_home
 fi
 
+# Create encrypted file
 if [ ! -e $alice_home/passwords.gpg ]
 then
 	touch $alice_home/passwords.gpg
